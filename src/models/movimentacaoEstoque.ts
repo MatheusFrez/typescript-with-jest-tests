@@ -15,7 +15,7 @@ export class MovimentacaoEstoque {
 
     public adicionarItem(item: ItemMovimentacao): void {
         this.itens.push(item);
-    }
+    } 
 
     public balanco(): number {
         return this.itens.reduce((total, item: ItemMovimentacao) =>  

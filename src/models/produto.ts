@@ -1,8 +1,8 @@
 export class Produto {
     private id: number
-    private codigo: string
+    public codigo: string
     private descricao: string
-    private estoque: number
+    public estoque: number
 
     constructor(id: number, codigo: string, descricao: string, estoque: number) {
         this.id = id

@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "tsc",
     "test": "jest",
-    "test-watch": "jest --watch"
+    "test-watch": "jest --watch "
   },
   "author": "",
   "license": "ISC",
@@ -18,5 +18,8 @@
   },
   "jest": {
     "preset": "ts-jest"
+  },
+  "dependencies": {
+    "tslib": "^1.11.1"
   }
 }
