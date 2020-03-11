@@ -1,49 +1,20 @@
 import { ColecaoProduto } from '@/interfaces/colecao-produto';
 import { Produto } from '@/models/produto';
+import { ColecaoEmStorage } from './colecao-em-storage';
 
 const CHAVE_STORAGE = 'produtos'
 
-export class ColecaoProdutoEmLocalStorage implements ColecaoProduto {
+export class ColecaoProdutoEmLocalStorage  extends ColecaoEmStorage<Produto> implements ColecaoProduto {
 
-    private storage: Storage = window.localStorage;
+    constructor() {
+        super(CHAVE_STORAGE);
+    } 
 
     /**
      * @returns Array de produtos presente atualmente na storage atual
      */
     async todos(): Promise<Array<Produto>> {
-        return this.produtos();
-    }
-
-    /**
-     * @returns Array<Produtos> Todos os produtos na storage atual
-     */
-    private produtos(): Array<Produto> {
-        return JSON.parse(this.storage.getItem(CHAVE_STORAGE)) || new Array<Produto>()
-    }
-
-    /**
-     * Faz a limpeza da storage atual, nessa classe ela e uma localStorage 
-     */
-    async esvaziar(): Promise<void> {
-        this.storage.clear();
-    }
-
-    /**
-     * Adiciona um produto a storage atual da classe
-     * @param  {Produto} produto a ser adicionado na storage atual
-     */
-    async adicionar(produto: Produto): Promise<void> {
-        const produtosString: string | null = this.storage.getItem(CHAVE_STORAGE) //TUDO QUE VEM DA STORAGE VEM COMO STRING DEVEMOS DESSERIALIZAR ELA
-        let produtos: Array<Produto> = JSON.parse(produtosString) as Array<Produto> || new Array<Produto>();
-        produtos.push(produto)
-        this.storage.setItem(CHAVE_STORAGE, JSON.stringify(produtos)) //SERIALIZANDO PRODUTOS PARA GUARDAR NA STORAGE
-    }
-
-    /**
-     * @param  {Array<Produto>} produtos a serem gravados na storage
-     */
-    private async gravarProdutos(produtos: Array<Produto>): Promise<void> {
-        this.storage.setItem(CHAVE_STORAGE, JSON.stringify(produtos));
+        return this.itens();
     }
 
     /**
@@ -51,7 +22,7 @@ export class ColecaoProdutoEmLocalStorage implements ColecaoProduto {
      * @returns Promise Produto encontrado
      */
     async produtoComCodigo(codigo: string): Promise<Produto | null> {
-        let produtos = this.produtos();
+        let produtos = this.itens();
         return produtos.find(p => p.codigo === codigo) || null
     }
 
@@ -60,12 +31,12 @@ export class ColecaoProdutoEmLocalStorage implements ColecaoProduto {
      * @param  {number} quantidade desejada de estoque
      */
     async aumentarEstoque(codigo: string, quantidade: number): Promise<void> {
-        const produtos = this.produtos();
+        const produtos = this.itens();
         const produtoEncontradoIndex = produtos.findIndex(produto => produto.codigo === codigo);
         if(produtoEncontradoIndex === -1)
             throw new Error('Produto não encontrado!');
         else produtos[produtoEncontradoIndex].estoque += quantidade
-        this.gravarProdutos(produtos)
+        this.gravarItens(produtos)
     }
 
     /** Diminui o estoque do produto desejado
@@ -73,12 +44,12 @@ export class ColecaoProdutoEmLocalStorage implements ColecaoProduto {
      * @param  {number} quantidade desejada de estoque
      */
     async diminuirEstoque(codigo: string, quantidade: number): Promise<void> {
-        const produtos = this.produtos();
+        const produtos = this.itens();
         const produtoEncontradoIndex = produtos.findIndex(produto => produto.codigo === codigo);
         if(produtoEncontradoIndex === -1)
             throw new Error('Produto não encontrado!');
         else produtos[produtoEncontradoIndex].estoque -= quantidade
-        this.gravarProdutos(produtos)
+        this.gravarItens(produtos)
     }
 
 } 
