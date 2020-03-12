@@ -34,6 +34,6 @@ export class ColecaoEmStorage<T, S extends Storage = Storage> {
      * Faz a limpeza da storage atual, nessa classe ela e uma localStorage 
      */
     async esvaziar(): Promise<void> {
-        this.storage.clear();
+        this.storage.removeItem(this.chave)
     }
 }
