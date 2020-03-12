@@ -3,7 +3,7 @@ import { Produto } from "./produto"
 
 export class ItemMovimentacao {
     public tipo_movimentacao: TipoMovimentacaoENUM
-    private produto: Produto
+    public produto: Produto
     public quantidade: number
 
     constructor(produto: Produto, quantidade: number, tipo: TipoMovimentacaoENUM) {
