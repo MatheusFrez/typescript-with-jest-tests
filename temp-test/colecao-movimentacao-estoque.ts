@@ -1,8 +1,8 @@
-import { MovimentacaoEstoque } from '../../src/models/movimentacaoEstoque'
-import { Produto } from '../../src/models/produto'
-import { ItemMovimentacao } from '../../src/models/itemMovimentacao';
-import { TipoMovimentacaoENUM } from '../../src/models/tipoMovimentacaoEstoque';
-import { ColecaoMovimentacaoProdutoLocalStorage } from '../../src/colecoes/colecao-movimentacao-storage';
+import { MovimentacaoEstoque } from '../src/models/movimentacaoEstoque'
+import { Produto } from '../src/models/produto'
+import { ItemMovimentacao } from '../src/models/itemMovimentacao';
+import { TipoMovimentacaoENUM } from '../src/models/tipoMovimentacaoEstoque';
+import { ColecaoMovimentacaoProdutoLocalStorage } from '../src/colecoes/colecao-movimentacao-storage';
 describe('ColecaoMovimentacaoEstoque', () => {
 
    let colecaoMovimentacaoEstoque: ColecaoMovimentacaoProdutoLocalStorage;
